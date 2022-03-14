@@ -207,12 +207,16 @@ router.get("/:name/deploy", async (req, res) => {
           codesFolder,
           `${image.name}_${image.tag}`
         );
-        await simpleGit(projectPath).pull();
+        if (!fs.existsSync(projectPath)) {
+          await simpleGit().clone(image.remote, projectPath);
+        } else {
+          await simpleGit(projectPath).pull();
+        }
+
         await buildImage(image);
       }
     }
 
-    
     await compose.upAll({ cwd: path.join(applicationsFolder, name) });
     res.json({
       code: 200,
