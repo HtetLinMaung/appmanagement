@@ -140,6 +140,9 @@ router
         services,
         volumes,
       });
+      if (!fs.existsSync(path.join(applicationsFolder, name))) {
+        fs.mkdirSync(path.join(applicationsFolder, name));
+      }
       fs.writeFileSync(
         path.join(applicationsFolder, name, "docker-compose.yml"),
         dockerCompose
