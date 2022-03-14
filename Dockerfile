@@ -1,8 +1,7 @@
 FROM node:lts-alpine3.14
 
 RUN apk update
-RUN apk add git
-RUN apk add docker
+RUN apk add git docker docker-compose
 
 WORKDIR /app
 
